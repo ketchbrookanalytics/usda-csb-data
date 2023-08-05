@@ -1,0 +1,36 @@
+---
+title: "Using Geoparquet to dig up incredible (free) insights in the new USDA crop maps"
+author: "Ketchbrook"
+date: "Aug 4, 2023"
+format: 
+  html:
+    toc: true
+    toc-title: Outline
+    theme:
+      light: cosmo
+      dark: darkly
+    self-contained: true
+    code-fold: show  
+    highlight-style: nord
+editor: visual
+---
+
+## A very thicc data drop from USDA
+
+## Initial thoughts
+
+## Analysis
+
+### The plan
+
+### The audience
+
+### From geodatabase to geoparquet
+
+### Light data cleaning
+
+### First plots
+
+### Let's make an infographic
+
+### What's next?

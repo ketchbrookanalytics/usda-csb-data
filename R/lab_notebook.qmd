@@ -1,8 +1,6 @@
 ---
 title: "lab_notebook"
 author: "Brad Lindblad"
-format: html
-editor: visual
 date: "Aug 4, 2023"
 format: 
   html:
@@ -31,27 +29,25 @@ Need to install with above instructions on linux
 
 library(arrow)
 library(dplyr)
+library(ggplot2)
 library(readr)
 library(sfarrow)
+library(tidyr)
 
- 
 
-bucket <- arrow::s3_bucket("ketchbrook-public-usda-nass-csb")
 
+system.time(
+  bucket <- arrow::s3_bucket("ketchbrook-public-usda-nass-csb")
+)
 
 
 # bucket$ls("year=2022", recursive=TRUE)
 
- 
+
 
 raw <- arrow::open_dataset(bucket) |>
-
-  dplyr::filter(STATEFIPS==38) |>
-
-  dplyr::filter(CNTYFIPS=="017") |>
-
-  # dplyr::count(CNTY) |>
-
+  dplyr::filter(STATEFIPS == 38) |>
+  dplyr::filter(CNTYFIPS == "017") |>
   sfarrow::read_sf_dataset()
 ```
 
