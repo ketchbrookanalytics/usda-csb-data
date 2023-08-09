@@ -30,6 +30,7 @@ Need to install with above instructions on linux
 library(arrow)
 library(dplyr)
 library(ggplot2)
+library(gt)
 library(readr)
 library(sfarrow)
 library(tidyr)
@@ -58,6 +59,8 @@ raw <- arrow::open_dataset(bucket) |>
 ### Read crop types
 
 Gathered from metadata info above
+
+lookup \<- readr::read_csv(here::here("data/00_raw/crop_types.csv"))
 
 ```{r}
 lookup <- readr::read_csv(here::here("data/00_raw/crop_types.csv"))

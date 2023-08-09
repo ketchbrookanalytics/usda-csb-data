@@ -9,8 +9,14 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Imports: 
     arrow,
+    CGPfunctions,
     dplyr,
+    ggcharts,
     ggplot2,
+    gt,
+    here,
+    leaflet,
+    patchwork,
     readr,
     sfarrow
 Encoding: UTF-8
