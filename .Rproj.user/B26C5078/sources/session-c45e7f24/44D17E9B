@@ -1,0 +1,26 @@
+{
+    "id": "44D17E9B",
+    "path": "~/Repos/usda-csb-data/py/convert_to_parquet_example.py",
+    "project_path": "py/convert_to_parquet_example.py",
+    "type": "python",
+    "hash": "947071004",
+    "contents": "",
+    "dirty": false,
+    "created": 1691720688560.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "6,41",
+        "scrollLine": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1691611153,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1691611153,
+    "read_only": false,
+    "read_only_alternatives": []
+}

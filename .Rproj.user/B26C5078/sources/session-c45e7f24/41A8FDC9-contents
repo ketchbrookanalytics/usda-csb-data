@@ -1,0 +1,126 @@
+---
+title: "lab_notebook"
+author: "Brad Lindblad"
+date: "Aug 4, 2023"
+format: 
+  html:
+    toc: true
+    toc-title: Outline
+    theme:
+      light: cosmo
+      dark: darkly
+    self-contained: true
+    code-fold: show  
+    highlight-style: nord
+editor: visual
+---
+
+## Data
+
+### Read from s3
+
+https://arrow.apache.org/docs/r/articles/install.html#r-source-package-with-libarrow-binary
+
+Need to install with above instructions on linux
+
+```{r}
+
+#| eval: false
+
+library(arrow)
+library(dplyr)
+library(ggplot2)
+library(gt)
+library(readr)
+library(sfarrow)
+library(tidyr)
+
+
+
+system.time(
+  bucket <- arrow::s3_bucket("ketchbrook-public-usda-nass-csb")
+)
+
+
+# bucket$ls("year=2022", recursive=TRUE)
+
+
+
+raw <- arrow::open_dataset(bucket) |>
+  dplyr::filter(STATEFIPS == 38) |>
+  dplyr::filter(CNTYFIPS == "017") |>
+  sfarrow::read_sf_dataset()
+```
+
+### Data discovery
+
+[Metadata info](https://www.nass.usda.gov/Research_and_Science/Crop-Sequence-Boundaries/metadata_Crop-Sequence-Boundaries-2022.htm)
+
+### Read crop types
+
+Gathered from metadata info above
+
+lookup \<- readr::read_csv(here::here("data/00_raw/crop_types.csv"))
+
+```{r}
+lookup <- readr::read_csv(here::here("data/00_raw/crop_types.csv"))
+```
+
+## Munge
+
+### Add crop types to data
+
+```{r}
+# raw |> 
+#   dplyr::left_join(lookup, by = c("R15" = "categorization_code")) |> View()
+mydata <-  raw  |> 
+  dplyr::mutate(across(tidyselect::starts_with("R"), ~tidyr::replace_na(as.numeric(.x), 0)))
+  
+raw_long <- mydata %>%
+  mutate(id = row_number()) %>%
+  pivot_longer(cols = starts_with("R"), names_to = "Column", values_to = "Value")
+
+# Merge with lookup dataframe based on 'Value'
+result <- raw_long %>%
+  left_join(lookup, by = c("Value" = "categorization_code")) %>%
+  sf::st_drop_geometry() |> 
+  # mutate(Replacement = coalesce(Replacement_R15, Replacement_R16, Replacement_R17)) %>%
+  # select(-starts_with("Replacement_"), -Value) %>%
+  pivot_wider(id_cols = 'id', names_from = 'Column', values_from = 'land_cover') %>%
+  select(-id)
+
+mydata <- mydata |> 
+  dplyr::select(!tidyselect::starts_with("R"))
+
+final <- dplyr::bind_cols(mydata, result)
+# View(final)
+
+# mydata$R17 <- lookup$land_cover[match(mydata$R17, lookup$categorization_code)]
+
+
+# rename
+
+rename_function <- function(col_name) {
+  if (startsWith(col_name, "R")) {
+    return(paste0("20", substring(col_name, 2)))
+  } else {
+    return(col_name)
+  }
+}
+
+# Rename columns starting with 'R'
+final <- final %>%
+  rename_with(rename_function, starts_with("R"))
+
+```
+
+### Plot it
+
+```{r}
+library(ggplot2)
+
+final |> 
+  dplyr::filter(`2022` == "Corn") |> 
+  ggplot() +
+  geom_sf(aes(fill= STATEFIPS))
+```
