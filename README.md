@@ -14,7 +14,7 @@ Lastly, the [data](data/) directory in this repository contains *.csv* files tha
 
 [Ketchbrook Analytics](https://www.ketchbrookanalytics.com) has hosted the 2022 CSB data in a public AWS S3 bucket (in .parquet format, partitioned by year and STATEFIPS code). [This blog post](https://blog.ketchbrookanalytics.com/posts/2023-08-09-geoparquet-for-usda-crop-maps/geoparquet-for-usda-crop-maps) can walk you through how to connect to this data yourself, using R. If you can't wait to read the blog post, this R code should help you get started:
 
-```
+```r
 library(arrow)
 library(dplyr)
 
