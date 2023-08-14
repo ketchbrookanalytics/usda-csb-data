@@ -2,9 +2,9 @@
 
 ![](www/what-are-csbs.png)
 
-In July 2023, the USDA released a public data set of Crop Service Boundaries in the United States. This data was in a heavy file format (*.gsb*) that ate up over 25GB of memory when trying to read the entire *.gsb* file in either R or Python.
+In July 2023, the USDA released a public data set of Crop Service Boundaries in the United States. This data was in a heavy file format (*.gdb*) that ate up over 25GB of memory when trying to read the entire *.gdb* file in either R or Python.
 
-In order to work with this data in either of those two open source programming languages, it needed to be ported to a different file format. The [py](py/) directory in this repository contains an [example script](py/convert_to_parquet_example.py) for ingesting the *.gsb* file and writing it out to *.parquet* format every `n` number of rows (in our example, we used `n = 1,000,000`).
+In order to work with this data in either of those two open source programming languages, it needed to be ported to a different file format. The [py](py/) directory in this repository contains an [example script](py/convert_to_parquet_example.py) for ingesting the *.gdb* file and writing it out to *.parquet* format every `n` number of rows (in our example, we used `n = 1,000,000`).
 
 Next, the [R](R/) directory in this repository contains an [example script](R/repartition_example.R) for re-partitioning the Parquet data by the unique values in a column in the data (in our example, we re-partitioned the data by `STATEFIPS` code).
 
