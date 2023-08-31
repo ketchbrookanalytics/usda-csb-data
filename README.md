@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-# usda-csb-data
- Crop Service Boundaries data from USDA
-=======
 # USDA Crop Sequence Boundaries Data
 
 ![](www/what-are-csbs.png)
@@ -42,7 +38,6 @@ arrow::open_dataset(bucket) |>
   ) |>
   dplyr::collect()
 ```
->>>>>>> Stashed changes
 
 ## Useful Links
 
